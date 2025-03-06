@@ -4,17 +4,21 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use DateTimeInterface;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\NewAccessToken;
 
 
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens, HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -69,4 +73,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+
+    public function createUuidToken(string $name, array $abilities = ['*'], ?DateTimeInterface $expiresAt = null): NewAccessToken
+    {
+        $plainTextToken = $this->generateTokenString();
+
+        $token = $this->tokens()->forceCreate([
+            'id' => $this->newUniqueId(),
+            'name' => $name,
+            'token' => hash('sha256', $plainTextToken),
+            'abilities' => $abilities,
+            'expires_at' => $expiresAt,
+        ]);
+
+        return new NewAccessToken($token, $token->getKey().'|'.$plainTextToken);
+    }
+
 }
