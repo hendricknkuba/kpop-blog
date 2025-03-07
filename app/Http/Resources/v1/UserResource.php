@@ -23,13 +23,12 @@ class UserResource extends JsonResource
                     'username' => $this->username,
                     'email' => $this->email,
                     'avatar' => $this->avatar,
-                    ], $this->mergeWhen($request->routeIs('users.show'),
-                    [
-                        'role' => $this->role,
-                        'bio' => $this->bio,
-                        'createdAt' => $this->created_at,
-                        'updatedAt' => $this->updated_at,
-                    ])),
+                    ] + array_filter([
+                    'role' => $this->when($request->routeIs('users.show'), $this->role),
+                    'bio' => $this->when($request->routeIs('users.show'), $this->bio),
+                    'createdAt' => $this->when($request->routeIs('users.show'), $this->created_at),
+                    'updatedAt' => $this->when($request->routeIs('users.show'), $this->updated_at),
+                ])),
                 'links' => [
                     'self' => route('users.show', ['user' => $this->id])
                 ]
