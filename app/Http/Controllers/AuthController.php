@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Api\v1\user\StoreUserRequest;
 use App\Http\Requests\ApiLoginRequest;
-use App\Models\PersonalAccessToken;
+use App\Http\Resources\v1\UserResource;
 use App\Models\User;
 use App\Traits\ApiResponses;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Ramsey\Uuid\Guid\Guid;
+use Illuminate\Http\JsonResponse;
+use Mockery\Exception;
 
 class AuthController extends Controller
 {
     use ApiResponses;
 
 
-    public function login(ApiLoginRequest $request)
+    public function login(ApiLoginRequest $request): JsonResponse
     {
         $request->validated();
 
@@ -39,4 +42,24 @@ class AuthController extends Controller
             ]
         );
     }
+
+    public function logout(Request $request): JsonResponse
+    {
+            Auth::user()->tokens()->delete();
+
+            return $this->ok('Logged out');
+    }
+
+    public function register(StoreUserRequest $request): JsonResponse
+    {
+        try {
+            $user = User::create($request->mappedAttributes());
+
+            return $this->resource(new UserResource($user));
+
+        } catch (Exception $e){
+            return $this->error($e->getMessage(), 200);
+        }
+    }
+
 }
