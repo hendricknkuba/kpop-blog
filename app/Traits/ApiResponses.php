@@ -36,4 +36,9 @@ trait ApiResponses
             'source' => '',
         ]);
     }
+
+    protected function resource($data, $statusCode = 201)
+    {
+        return response()->json($data, $statusCode);
+    }
 }
