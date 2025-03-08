@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\v1\PostsController;
 use App\Http\Controllers\Api\v1\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,4 +13,6 @@ Route::prefix('v1')->group(function () {
 Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
 
     Route::apiResource('users', UsersController::class)->except('update');
+
+    Route::apiResource('posts', PostsController::class);
 });
