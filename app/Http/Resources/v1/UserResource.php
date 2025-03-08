@@ -29,6 +29,7 @@ class UserResource extends JsonResource
                     'createdAt' => $this->when($request->routeIs('users.show'), $this->created_at),
                     'updatedAt' => $this->when($request->routeIs('users.show'), $this->updated_at),
                 ])),
+                'includes' => PostResource::collection($this->whenLoaded('posts')),
                 'links' => [
                     'self' => route('users.show', ['user' => $this->id])
                 ]
