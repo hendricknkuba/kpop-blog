@@ -19,12 +19,12 @@ class LikeResource extends JsonResource
                 'type' => 'likes',
                 'id' => $this->id,
                 'attributes' => array_merge([
-                    'author_id' => $this->author_id,
+                    'author_id' => $this->user_id,
                     'post_id' => $this->post_id,
-                    ], $this->mergeWhen($request->routeIs('likes.show'),
+                    ] + array_filter(
                     [
-                        'createdAt' => $this->created_at,
-                        'updatedAt' => $this->updated_at,
+                        'createdAt' => $this->when($request->routeIs('users.show'), $this->created_at),
+                        'updatedAt' => $this->when($request->routeIs('users.show'), $this->updated_at),
                     ])),
                 'links' => [
                     'self' => route('likes.show', ['likes' => $this->id])
