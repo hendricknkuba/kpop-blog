@@ -20,7 +20,7 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            'author_id' => User::inRandomOrder()->first()->id ?? User::factory(),
+            'user_id' => User::inRandomOrder()->first()->id ?? User::factory(),
             'title' => $this->faker->text(20),
             'slug' => $this->faker->slug(),
             'content' => $this->faker->paragraph(),
