@@ -37,4 +37,17 @@ class UserPolicy
 
         return false;
     }
+
+    public function replace(User $authUser, User $user): bool
+    {
+        if ($authUser->tokenCan(Abilities::ReplaceUser)){
+            return true;
+        }
+
+        if ($authUser->tokenCan(Abilities::ReplaceOwnUser)){
+            return $authUser->id === $user->id;
+        }
+
+        return false;
+    }
 }
