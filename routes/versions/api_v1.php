@@ -11,8 +11,11 @@ Route::prefix('v1')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
-
     Route::apiResource('users', UsersController::class)->except('update');
+    Route::put('users/{user}', [UsersController::class, 'replace']);
+    Route::patch('users/{user}', [UsersController::class, 'update']);
 
-    Route::apiResource('posts', PostsController::class);
+    Route::apiResource('posts', PostsController::class)->except('update');
+    Route::put('posts/{post}', [PostsController::class, 'replace']);
+    Route::patch('posts/{post}', [PostsController::class, 'update']);
 });
