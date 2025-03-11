@@ -6,6 +6,7 @@ use App\Http\Requests\Api\v1\user\StoreUserRequest;
 use App\Http\Requests\ApiLoginRequest;
 use App\Http\Resources\v1\UserResource;
 use App\Models\User;
+use App\Permissions\v1\Abilities;
 use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +39,7 @@ class AuthController extends Controller
             [
                 'token' => $user->createUuidToken(
                     'API Token',
+                    Abilities::getAbilities($user),
                 )->plainTextToken,
             ]
         );
