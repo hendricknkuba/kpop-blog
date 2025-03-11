@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Policies\v1\UserPolicy;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::define('update-user', [UserPolicy::class, 'update']);
+        Gate::define('delete-user', [UserPolicy::class, 'delete']);
     }
 }
