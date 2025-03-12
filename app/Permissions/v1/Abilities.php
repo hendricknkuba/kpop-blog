@@ -13,12 +13,16 @@ final class Abilities {
     public const UpdateOwnPost = 'post:updateOwn';
     public const DeletePost = 'post:delete';
     public const DeleteOwnPost = 'post:deleteOwn';
+    public const ReplacePost = 'post:replace';
+    public const ReplaceOwnPost = 'post:replaceOwn';
 
     //User Abilities
     public const UpdateUser = 'user:update';
     public const UpdateOwnUser = 'user:updateOwn';
     public const DeleteOwnUser = 'user:deleteOwn';
     public const DeleteUser = 'user:delete';
+    public const ReplaceUser = 'user:replace';
+    public const ReplaceOwnUser = 'user:updateOwn';
 
     public static function getAbilities(User $user): array
     {
@@ -34,6 +38,10 @@ final class Abilities {
                 self::UpdateOwnUser,
                 self::DeleteOwnUser,
                 self::DeleteUser,
+                self::ReplaceUser,
+                self::ReplaceOwnUser,
+                self::ReplacePost,
+                self::ReplaceOwnPost,
             ];
         } else {
             return [
@@ -42,6 +50,8 @@ final class Abilities {
                 self::DeleteOwnPost,
                 self::UpdateOwnUser,
                 self::DeleteOwnUser,
+                self::ReplaceOwnUser,
+                self::ReplaceOwnPost,
             ];
         }
     }

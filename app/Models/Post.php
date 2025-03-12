@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Http\Filters\v1\QueryFilter;
 use Database\Factories\PostFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,7 +17,7 @@ class Post extends Model
     Use HasFactory;
 
     protected $fillable = [
-        'author_id',
+        'user_id',
         'title',
         'slug',
         'content',
@@ -41,5 +43,10 @@ class Post extends Model
     public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filters): Builder
+    {
+        return $filters->apply($builder);
     }
 }
