@@ -13,6 +13,8 @@ final class Abilities {
     public const UpdateOwnPost = 'post:updateOwn';
     public const DeletePost = 'post:delete';
     public const DeleteOwnPost = 'post:deleteOwn';
+    public const ReplacePost = 'post:replace';
+    public const ReplaceOwnPost = 'post:replaceOwn';
 
     //User Abilities
     public const UpdateUser = 'user:update';
@@ -38,6 +40,8 @@ final class Abilities {
                 self::DeleteUser,
                 self::ReplaceUser,
                 self::ReplaceOwnUser,
+                self::ReplacePost,
+                self::ReplaceOwnPost,
             ];
         } else {
             return [
@@ -46,7 +50,8 @@ final class Abilities {
                 self::DeleteOwnPost,
                 self::UpdateOwnUser,
                 self::DeleteOwnUser,
-                self::ReplaceOwnUser
+                self::ReplaceOwnUser,
+                self::ReplaceOwnPost,
             ];
         }
     }
