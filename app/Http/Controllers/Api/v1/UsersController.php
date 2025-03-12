@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-
 use App\Http\Filters\v1\UserFilter;
 use App\Http\Requests\Api\v1\user\ReplaceUserRequest;
 use App\Http\Requests\Api\v1\user\UpdateUserRequest;
 use App\Http\Resources\v1\UserResource;
 use App\Models\User;
-use App\Policies\v1\UserPolicy;
 use Illuminate\Support\Facades\Gate;
 
 class UsersController extends ApiController
@@ -50,10 +48,15 @@ class UsersController extends ApiController
 
     public function destroy(User $user)
     {
-        Gate::authorize('delete-user', $user);
+        try {
+            Gate::authorize('delete-user', $user);
 
-        $user->delete();
-        return $this->ok('User deleted.');
+            $user->delete();
+            return $this->ok('User deleted.');
+        } catch (\Exception $e){
+            return $this->error($e->getMessage());
+        }
+
     }
 
 }
