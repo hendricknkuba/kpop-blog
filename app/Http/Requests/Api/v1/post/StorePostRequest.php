@@ -7,7 +7,9 @@ class StorePostRequest extends BasePostRequest
 {
     public function authorize(): bool
     {
-        return true;
+        //return true;
+        // Se o user_id da URL for diferente do author_id do request, retorna falso
+        return $this->route('user') == $this->input('data.attributes.author_id', $this->route('user'));
     }
 
     public function rules(): array
