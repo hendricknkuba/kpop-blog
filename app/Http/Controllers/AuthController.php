@@ -11,6 +11,8 @@ use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Mockery\Exception;
 
 class AuthController extends Controller
@@ -62,6 +64,39 @@ class AuthController extends Controller
         } catch (Exception $e){
             return $this->error($e->getMessage(), 200);
         }
+    }
+
+    public function forgotPassword(Request $request): JsonResponse
+    {
+        $request->validate([
+           'email' => 'required|email|exists:users,email',
+        ]);
+
+        $status = Password::sendResetLink($request->only('email'));
+
+        return Password::RESET_LINK_SENT
+            ? $this->ok('Reset password link sent.')
+            : $this->error('Reset password link failed.', 400);
+    }
+
+    public function resetPassword(Request $request): JsonResponse
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $status = Password::reset(
+          $request->only('email', 'password', 'password_confirmation', 'token'),
+          function (User $user, string $password) {
+                $user->forceFill(['password' => Hash::make($password)])->save();
+          }
+        );
+
+        return $status === Password::PASSWORD_RESET
+            ? $this->ok('Password reset successfully.')
+            : $this->error('Password reset failed.', 400);
     }
 
 }
