@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\v1;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -31,6 +32,7 @@ class PostResource extends JsonResource
                         'createdAt' => $this->when($request->routeIs('posts.show'), $this->created_at),
                         'updatedAt' => $this->when($request->routeIs('posts.show'), $this->updated_at),
                     ])),
+                'includes' => CommentResource::collection($this->whenLoaded('comments')),
                 'links' => [
                     'self' => route('posts.show', ['post' => $this->id])
                 ]
