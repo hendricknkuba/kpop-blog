@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\v1\CommentsController;
 use App\Http\Controllers\Api\v1\PostsController;
 use App\Http\Controllers\Api\v1\UserPostsController;
 use App\Http\Controllers\Api\v1\UsersController;
@@ -13,12 +14,15 @@ Route::prefix('v1')->group(function () {
     });
 });
 
-Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+});
+
+Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
 
     Route::apiResource('users', UsersController::class)->except('update');
     Route::put('users/{user}', [UsersController::class, 'replace']);
@@ -31,4 +35,6 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::apiResource('users.posts', UserPostsController::class)->except('update');
     Route::put('users/{user}/posts/{post}', [UserPostsController::class, 'replace']);
     Route::patch('users/{user}/posts/{post}', [UserPostsController::class, 'update']);
+
+    Route::apiResource('comments', CommentsController::class);
 });
