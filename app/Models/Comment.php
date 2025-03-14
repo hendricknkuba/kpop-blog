@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Http\Filters\v1\QueryFilter;
 use Database\Factories\CommentFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,7 +18,7 @@ class Comment extends Model
 
     protected $fillable = [
         'post_id',
-        'author_id',
+        'user_id',
         'comment',
     ];
 
@@ -32,6 +34,11 @@ class Comment extends Model
                 $model->id = (string) Str::uuid();
             }
         });
+    }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filters): Builder
+    {
+        return $filters->apply($builder);
     }
 
 
