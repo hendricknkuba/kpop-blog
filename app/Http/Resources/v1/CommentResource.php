@@ -25,11 +25,11 @@ class CommentResource extends JsonResource
                     'image' => $this->image,
                     ] + array_filter(
                     [
-                        'createdAt' => $this->when($request->routeIs('users.show'), $this->created_at),
-                        'updatedAt' => $this->when($request->routeIs('users.show'), $this->updated_at),
+                        'createdAt' => $this->when($request->routeIs('comments.show'), $this->created_at),
+                        'updatedAt' => $this->when($request->routeIs('comments.show'), $this->updated_at),
                     ])),
                 'links' => [
-                    'self' => route('comments.show', ['comments' => $this->id])
+                    'self' => route('comments.show', ['comment' => $this->id])
                 ]
             ]
         ];

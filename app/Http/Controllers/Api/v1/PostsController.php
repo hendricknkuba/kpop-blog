@@ -21,6 +21,11 @@ class PostsController extends ApiController
 
     public function show(Post $post)
     {
+        if ($this->include('comments'))
+        {
+            return  new PostResource($post->load('comments'));
+        }
+
         return new PostResource($post);
     }
 

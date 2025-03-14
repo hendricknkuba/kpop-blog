@@ -6,6 +6,14 @@ use App\Models\User;
 
 final class Abilities {
 
+    //User Abilities
+    public const UpdateUser = 'user:update';
+    public const UpdateOwnUser = 'user:updateOwn';
+    public const DeleteOwnUser = 'user:deleteOwn';
+    public const DeleteUser = 'user:delete';
+    public const ReplaceUser = 'user:replace';
+    public const ReplaceOwnUser = 'user:updateOwn';
+
     //Post Abilities
     public const CreatePost = 'post:create';
     public const CreateOwnPost = 'post:createOwnPost';
@@ -16,13 +24,14 @@ final class Abilities {
     public const ReplacePost = 'post:replace';
     public const ReplaceOwnPost = 'post:replaceOwn';
 
-    //User Abilities
-    public const UpdateUser = 'user:update';
-    public const UpdateOwnUser = 'user:updateOwn';
-    public const DeleteOwnUser = 'user:deleteOwn';
-    public const DeleteUser = 'user:delete';
-    public const ReplaceUser = 'user:replace';
-    public const ReplaceOwnUser = 'user:updateOwn';
+    //Comment Abilities
+    public const CreateComment = 'comment:create';
+    public const CreateOwnComment = 'comment:createOwnComment';
+    public const UpdateComment = 'comment:update';
+    public const UpdateOwnComment = 'comment:updateOwnComment';
+    public const DeleteComment = 'comment:delete';
+    public const DeleteOwnComment = 'comment:deleteOwn';
+
 
     public static function getAbilities(User $user): array
     {
@@ -42,6 +51,12 @@ final class Abilities {
                 self::ReplaceOwnUser,
                 self::ReplacePost,
                 self::ReplaceOwnPost,
+                self::CreateComment,
+                self::CreateOwnComment,
+                self::UpdateComment,
+                self::UpdateOwnComment,
+                self::DeleteComment,
+                self::DeleteOwnComment,
             ];
         } else {
             return [
@@ -52,6 +67,9 @@ final class Abilities {
                 self::DeleteOwnUser,
                 self::ReplaceOwnUser,
                 self::ReplaceOwnPost,
+                self::CreateOwnComment,
+                self::UpdateOwnComment,
+                self::DeleteOwnComment,
             ];
         }
     }
