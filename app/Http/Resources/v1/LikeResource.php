@@ -15,7 +15,6 @@ class LikeResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'data' => [
                 'type' => 'likes',
                 'id' => $this->id,
                 'attributes' => array_merge([
@@ -29,7 +28,6 @@ class LikeResource extends JsonResource
                 'links' => [
                     'self' => route('likes.show', ['likes' => $this->id])
                 ]
-            ]
         ];
     }
 }
