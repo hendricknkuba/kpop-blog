@@ -15,7 +15,6 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'data' => [
                 'type' => 'users',
                 'id' => $this->id,
                 'attributes' => array_merge([
@@ -33,7 +32,6 @@ class UserResource extends JsonResource
                 'links' => [
                     'self' => route('users.show', ['user' => $this->id])
                 ]
-            ]
         ];
     }
 }
