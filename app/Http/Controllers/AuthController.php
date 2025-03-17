@@ -72,7 +72,7 @@ class AuthController extends Controller
            'email' => 'required|email|exists:users,email',
         ]);
 
-        $status = Password::sendResetLink($request->only('email'));
+        Password::sendResetLink($request->only('email'));
 
         return Password::RESET_LINK_SENT
             ? $this->ok('Reset password link sent.')

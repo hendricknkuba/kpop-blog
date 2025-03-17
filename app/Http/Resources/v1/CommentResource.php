@@ -15,7 +15,6 @@ class CommentResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'data' => [
                 'type' => 'comments',
                 'id' => $this->id,
                 'attributes' => array_merge([
@@ -31,7 +30,6 @@ class CommentResource extends JsonResource
                 'links' => [
                     'self' => route('comments.show', ['comment' => $this->id])
                 ]
-            ]
         ];
     }
 }

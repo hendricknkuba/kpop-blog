@@ -16,7 +16,6 @@ class PostResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'data' => [
                 'type' => 'posts',
                 'id' => $this->id,
                 'attributes' => array_merge([
@@ -36,7 +35,6 @@ class PostResource extends JsonResource
                 'links' => [
                     'self' => route('posts.show', ['post' => $this->id])
                 ]
-            ]
         ];
     }
 }
